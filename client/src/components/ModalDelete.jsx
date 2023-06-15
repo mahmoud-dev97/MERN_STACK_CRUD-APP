@@ -10,7 +10,6 @@ export default function ModalDelete({ id }) {
     setShow(false);
     setIsSubmitting(false);
   }
-
   return (
     <>
       <Modal show={show} onHide={handleClose}>

@@ -3,11 +3,15 @@ import ModalAdd from "./components/ModalAdd";
 import DataTable from "./components/DataTable";
 import ModalUpdate from "./components/ModalUpdate";
 import { CompanyContext } from "./api/AppContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const { setShowModalA } = useContext(CompanyContext);
+  const { setShowModalA, getCompanies, isSubmitting } =
+    useContext(CompanyContext);
+  useEffect(() => {
+    getCompanies();
+  }, [getCompanies, isSubmitting]);
   return (
     <>
       <Container>

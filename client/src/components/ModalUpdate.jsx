@@ -5,7 +5,8 @@ import ModalBoot from "./ModalBoot";
 function ModalUpdate() {
   const { showModalU, setShowModalU, updateCompany } =
     useContext(CompanyContext);
-  return (
+
+    return (
     <>
       <ModalBoot
         handelSubmit={updateCompany}

@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import "./url.js";
+import React, { useState, createContext, useCallback } from "react";
 import { BASE_URL } from "./url.js";
 import { errorToast, successToast } from "../components/AletTimer.jsx";
-const CompanyContext = React.createContext();
+const CompanyContext = createContext();
+
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [currentItem, setCurrentItem] = useState({
@@ -96,19 +96,15 @@ function Provider({ children }) {
   };
 
   // get list of companies
-  const getData = () =>
+  const getCompanies = useCallback(() => {
     axios
       .get(BASE_URL)
       .then((res) => {
         setData(res.data);
       })
       .catch((err) => console.log(err));
-  useEffect(() => {
-    getData();
   }, []);
-  useEffect(() => {
-    getData();
-  }, [isSubmitting]);
+
   // value to Share
   const valuesToShare = {
     data,
@@ -124,6 +120,7 @@ function Provider({ children }) {
     addCompany,
     updateCompany,
     deleteCompany,
+    getCompanies,
     show,
     setShow,
   };

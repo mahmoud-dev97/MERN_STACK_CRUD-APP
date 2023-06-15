@@ -5,7 +5,6 @@ import { CompanyContext } from "../api/AppContext";
 function ModalBoot({ handelSubmit, title, showModal, setShowModal }) {
   const { currentItem, setCurrentItem, handleInputChange, isSubmitting } =
     useContext(CompanyContext);
-
   return (
     <>
       <Modal

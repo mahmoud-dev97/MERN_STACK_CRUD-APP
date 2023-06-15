@@ -4,7 +4,6 @@ import ModalBoot from "./ModalBoot";
 
 function ModalAdd() {
   const { showModalA, setShowModalA, addCompany } = useContext(CompanyContext);
-
   return (
     <>
       <ModalBoot
