@@ -1,25 +1,20 @@
 import axios from "axios";
 import { Alert, Button, Modal, Spinner } from "react-bootstrap";
-import AlertTimer from "./AletTimer";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { MyContext } from "../api/AppContext";
+import { BASE_URL } from "../api/url";
+import { ToastContainer } from "react-toastify";
+import { successToast } from "./AletTimer";
 
-export default function ModalDelete({ id, setData, show, setShow }) {
-  const [alertShow, setAlertShow] = useState(false);
-  const { isSubmitting, setIsSubmitting, alertInfo, setAlertInfo } =
-    useContext(MyContext);
+export default function ModalDelete({ id, show, setShow }) {
+  const { isSubmitting, setIsSubmitting } = useContext(MyContext);
   function handleDelete() {
     setIsSubmitting(true);
     setTimeout(() => {
       axios
-        .delete(`http://localhost:3001/${id}`)
+        .delete(`${BASE_URL}${id}`)
         .then((res) => {
-          // setData((pre) => pre.filter((el) => el._id !== id));
-          setAlertInfo({
-            message: res.data,
-            type: "success",
-          });
-          setAlertShow(true);
+          successToast(res.data);
           setShow(false);
           setIsSubmitting(false);
         })
@@ -49,13 +44,7 @@ export default function ModalDelete({ id, setData, show, setShow }) {
           </Button>
         </Alert>
       </Modal>
-      {alertShow && (
-        <AlertTimer
-          setAlertShow={setAlertShow}
-          message={alertInfo.message}
-          type={alertInfo.type}
-        />
-      )}
+      <ToastContainer />
     </>
   );
 }

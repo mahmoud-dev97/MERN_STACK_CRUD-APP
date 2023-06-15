@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Alert } from "react-bootstrap";
+import { toast } from "react-toastify";
 
-function AletTimer({ setAlertShow, type, message }) {
-  const [show, setShow] = useState(true);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShow(false);
-      setAlertShow(false);
-    }, 2000);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
-  return (
-    <Alert variant={type} onClose={() => setShow(false)} show={show}>
-      {message}
-    </Alert>
-  );
+export function successToast(msg) {
+  return toast.success(msg, {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
 }
-
-export default AletTimer;
+export function errorToast(msg) {
+  return toast.error(msg, {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+}

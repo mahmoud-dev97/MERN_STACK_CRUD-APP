@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import "./url.js";
+import { BASE_URL } from "./url.js";
 const MyContext = React.createContext();
 function MyProvider({ children }) {
   const [data, setData] = useState([]);
@@ -11,10 +12,6 @@ function MyProvider({ children }) {
   const [showModalU, setShowModalU] = useState(false);
   const [showModalA, setShowModalA] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [alertInfo, setAlertInfo] = useState({
-    message: "",
-    type: "",
-  });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCurrentItem((prevState) => ({
@@ -24,7 +21,7 @@ function MyProvider({ children }) {
   };
   const getData = () =>
     axios
-      .get("http://localhost:3001/")
+      .get(BASE_URL)
       .then((res) => {
         setData(res.data);
       })
@@ -49,8 +46,6 @@ function MyProvider({ children }) {
         handleInputChange,
         isSubmitting,
         setIsSubmitting,
-        alertInfo,
-        setAlertInfo,
       }}
     >
       {children}

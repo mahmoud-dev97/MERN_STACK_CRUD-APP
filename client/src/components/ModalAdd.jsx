@@ -1,21 +1,18 @@
 import axios from "axios";
-import { useContext, useState } from "react";
-import AlertTimer from "./AletTimer";
+import { useContext } from "react";
 import { MyContext } from "../api/AppContext";
 import ModalBoot from "./ModalBoot";
+import { BASE_URL } from "../api/url";
+import { errorToast, successToast } from "./AletTimer";
+import { ToastContainer } from "react-toastify";
 
 function ModalAdd() {
-  const [alertShow, setAlertShow] = useState(false);
-
   const {
     currentItem,
     setCurrentItem,
-    setData,
     setIsSubmitting,
     showModalA,
     setShowModalA,
-    alertInfo,
-    setAlertInfo,
   } = useContext(MyContext);
 
   function handleSubmit(e) {
@@ -23,32 +20,23 @@ function ModalAdd() {
     setIsSubmitting(true);
     setTimeout(() => {
       axios
-        .post("http://localhost:3001/", currentItem)
+        .post(BASE_URL, currentItem)
         .then((res) => {
           setCurrentItem({
             companyName: "",
             origin: "",
           });
-          setAlertInfo({
-            message: res.data,
-            type: "success",
-          });
+          successToast(res.data);
           setShowModalA(false);
-          setAlertShow(true);
           setIsSubmitting(false);
         })
         .catch((err) => {
-          console.log(err);
-          setAlertInfo({
-            message: err.response.data,
-            type: "danger",
-          });
+          errorToast(err.response.data);
           setCurrentItem({
             companyName: "",
             origin: "",
           });
           setShowModalA(false);
-          setAlertShow(true);
           setIsSubmitting(false);
         });
     }, 1000);
@@ -62,13 +50,7 @@ function ModalAdd() {
         showModal={showModalA}
         setShowModal={setShowModalA}
       />
-      {alertShow && (
-        <AlertTimer
-          setAlertShow={setAlertShow}
-          message={alertInfo.message}
-          type={alertInfo.type}
-        />
-      )}
+      <ToastContainer />
     </>
   );
 }

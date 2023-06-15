@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const smartPhoneRoute = require("./routes/smartPhonesRoute");
+const port = 8000;
 const app = express();
 const dbURI =
   "mongodb+srv://wezaa:wzz@cluster0.5nc1cdd.mongodb.net/crud?retryWrites=true&w=majority";
@@ -17,6 +18,6 @@ mongoose
 
 app.use(smartPhoneRoute);
 
-app.listen(3001, () => {
-  console.log("server startedon port 3001");
+app.listen(port, () => {
+  console.log(`server startedon port ${port}`);
 });
