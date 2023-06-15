@@ -1,12 +1,11 @@
 import { Button, Table } from "react-bootstrap";
 import ModalDelete from "./ModalDelete";
 import { useContext, useState } from "react";
-import { MyContext } from "../api/AppContext";
+import { CompanyContext } from "../api/AppContext";
 
 export default function DataTable() {
-  const { data, setData, setCurrentItem, setShowModalU } =
-    useContext(MyContext);
-  const [show, setShow] = useState(false);
+  const { data, setCurrentItem, setShowModalU, setShow } =
+    useContext(CompanyContext);
   const [id, setId] = useState("");
   function handleDeleteClick(el) {
     setShow(true);
@@ -50,7 +49,7 @@ export default function DataTable() {
           ))}
         </tbody>
       </Table>
-      <ModalDelete id={id} setData={setData} show={show} setShow={setShow} />
+      <ModalDelete id={id} />
     </>
   );
 }

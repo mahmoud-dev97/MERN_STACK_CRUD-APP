@@ -1,26 +1,10 @@
-import axios from "axios";
 import { Alert, Button, Modal, Spinner } from "react-bootstrap";
 import { useContext } from "react";
-import { MyContext } from "../api/AppContext";
-import { BASE_URL } from "../api/url";
-import { ToastContainer } from "react-toastify";
-import { successToast } from "./AletTimer";
+import { CompanyContext } from "../api/AppContext";
 
-export default function ModalDelete({ id, show, setShow }) {
-  const { isSubmitting, setIsSubmitting } = useContext(MyContext);
-  function handleDelete() {
-    setIsSubmitting(true);
-    setTimeout(() => {
-      axios
-        .delete(`${BASE_URL}${id}`)
-        .then((res) => {
-          successToast(res.data);
-          setShow(false);
-          setIsSubmitting(false);
-        })
-        .catch((err) => console.log(err));
-    }, 1000);
-  }
+export default function ModalDelete({ id }) {
+  const { isSubmitting, setIsSubmitting, deleteCompany, show, setShow } =
+    useContext(CompanyContext);
 
   function handleClose() {
     setShow(false);
@@ -33,7 +17,7 @@ export default function ModalDelete({ id, show, setShow }) {
         <Alert className="m-0 p-3" onClose={handleClose} variant="danger">
           <h4 className="mb-4 mt-3">Are you sure to delete this item?</h4>
           <Button
-            onClick={handleDelete}
+            onClick={() => deleteCompany(id)}
             variant="danger"
             disabled={isSubmitting}
           >
@@ -44,7 +28,6 @@ export default function ModalDelete({ id, show, setShow }) {
           </Button>
         </Alert>
       </Modal>
-      <ToastContainer />
     </>
   );
 }
